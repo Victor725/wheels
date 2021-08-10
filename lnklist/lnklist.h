@@ -14,7 +14,7 @@ class lnk{
 template<class T>
 class lnklist{
 private:
-    lnk<T>* head,tail;
+    lnk<T>* head,tail;  //tail points to last  head points to -1
     lnk<T>* setPos(int pos);
 public:
     lnklist(int s);
@@ -31,7 +31,14 @@ public:
 
 template<class T>
 lnk<T>* lnklist<T>::setPos(int pos){
-
+    if(pos==-1) return head;
+    lnk<T>* p=head->next;
+    int count=0;
+    while(p!=NULL&&count<pos){
+        p=p->next;
+        count++;
+    }
+    return p;
 }
 
 template<class T>
@@ -46,7 +53,8 @@ lnklist<T>::~lnklist(){
 
 template<class T>
 bool lnklist<T>::isEmpty(){
-
+    if(head->next==NULL) return true;
+    return false;
 }
 
 template<class T>
@@ -56,7 +64,7 @@ void lnklist<T>::clear(){
 
 template<class T>
 int lnklist<T>::length(){
-
+    
 }
 
 template<class T>
