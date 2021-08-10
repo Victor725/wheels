@@ -34,7 +34,6 @@ public:
 
 
 
-
 template<class T>
 int sqlist<T>::length(){
     return cursize;
