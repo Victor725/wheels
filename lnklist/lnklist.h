@@ -87,10 +87,11 @@ bool lnklist<T>::del(int pos){
 
 template<class T>
 T lnklist<T>::getval(int pos){
-
+    lnk<T>* p=setPos(pos);
+    return p->data;
 }
 
 template<class T>
 int lnklist<T>::getPos(T val){
-
+    
 }
