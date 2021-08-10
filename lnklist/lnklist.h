@@ -2,7 +2,7 @@ template<class T>
 class lnk{
     T data;
     lnk<T>* next;
-    lnk(T data0,lnk<T>* nextval){
+    lnk(T data0,lnk<T>* nextval=NULL){
         data=data0;
         next=nextval;
     }
@@ -64,12 +64,15 @@ void lnklist<T>::clear(){
 
 template<class T>
 int lnklist<T>::length(){
-    
+
 }
 
 template<class T>
 bool lnklist<T>::append(T val){
-
+    lnk<T>* p=new lnk<T>(val);
+    tail->next=p;
+    tail=p;
+    return true;
 }
 
 template<class T>
