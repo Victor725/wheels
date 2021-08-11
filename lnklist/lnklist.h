@@ -1,3 +1,5 @@
+#include<exception>
+
 template<class T>
 class lnk{
     T data;
@@ -59,12 +61,25 @@ bool lnklist<T>::isEmpty(){
 
 template<class T>
 void lnklist<T>::clear(){
-
+    lnk<T>* p=head->next;
+    lnk<T>* tem;
+    while(p!=NULL){
+        tem=p;
+        p=p->next;
+        delete tem;
+    }
+    tail=NULL;
 }
 
 template<class T>
 int lnklist<T>::length(){
-
+    int i=0;
+    lnk<T>* p=head->next;
+    while(p!=NULL){
+        p=p->next;
+        i++;
+    }
+    return i;
 }
 
 template<class T>
@@ -77,12 +92,33 @@ bool lnklist<T>::append(T val){
 
 template<class T>
 bool lnklist<T>::insert(int pos,T val){
-
+    lnk<T>* p=setPos(pos-1);
+    try{
+        if(p!=NULL){
+            lnk<T>* tem=new lnk<T>(val);
+            tem->next=p->next;
+            p->next=tem;
+            return true;
+        }
+        else return false;
+    }
+    catch(...){
+        return false;
+    }
 }
 
 template<class T>
 bool lnklist<T>::del(int pos){
-
+    try{
+        lnk<T>* p=setPos(pos-1);
+        lnk<T>* tem=p->next;
+        p->next=tem->next;
+        delete tem;
+        return true;
+    }
+    catch(...){
+        return false;
+    }
 }
 
 template<class T>
@@ -93,5 +129,14 @@ T lnklist<T>::getval(int pos){
 
 template<class T>
 int lnklist<T>::getPos(T val){
-    
+    lnk<T>* p=head->next;
+    int i=0;
+    while(p!=NULL){
+        if(p->data==val){
+            return i;
+        }
+        p=p->next;
+        i++;
+    }    
+    return -1;
 }
