@@ -1,7 +1,10 @@
 #include<exception>
+#include<iostream>
+using namespace std;
 
 template<class T>
 class lnk{
+public:
     T data;
     lnk<T>* next;
     lnk(T data0,lnk<T>* nextval=NULL){
@@ -16,7 +19,7 @@ class lnk{
 template<class T>
 class lnklist{
 private:
-    lnk<T>* head,tail;  //tail points to last  head points to -1
+    lnk<T>* head,*tail;  //tail points to last  head points to -1
     lnk<T>* setPos(int pos);
     int len;
 public:
@@ -30,34 +33,46 @@ public:
     bool del(int pos);
     T getval(int pos);
     int getPos(T val);
+    void show();
   };
 
 template<class T>
 lnklist<T>::lnklist(int s){
     //initialize head and tail
-    head=new lnk<T>(NULL);
-    tail=NULL;
+    head=new lnk<T>(nullptr);
+    tail=nullptr;
+    len=0;
 
     //get values
     for(int i=0;i<s;i++){
-        int val=0;
-        cin<<val;
+        T val;
+        cin>>val;
         lnk<T>* p=new lnk<T>(val);
         if(i==0){
             head->next=p;
             tail=p;
+            len++;
+            continue;
         }
----------------------------------------------------------------------!!!???sdafjsdl
+        append(val);
     }
 }
 
 template<class T>
 lnklist<T>::~lnklist(){
-
+    lnk<T>* p=head->next;
+    while(p!=NULL){
+        lnk<T>* tem=p;
+        p=p->next;
+        delete tem;
+    }
+    delete head;
+    tail=NULL;
 }
 
 template<class T>
 lnk<T>* lnklist<T>::setPos(int pos){
+    if(pos<-1||pos>len-1) return NULL;
     if(pos==-1) return head;
     if(pos==len-1) return tail;
     lnk<T>* p=head->next;
@@ -107,10 +122,18 @@ bool lnklist<T>::append(T val){
 template<class T>
 bool lnklist<T>::insert(int pos,T val){
     if(pos<0||pos>=len) return false;
-    lnk<T>* p=setPos(pos-1);
     try{
+        lnk<T>* tem=new lnk<T>(val);
+        //only have a little effect...
+        if(pos==0){//add to the beginning
+            tem->next=head->next;
+            head->next=tem;
+            len++;
+            return true;
+        }
+        
+        lnk<T>* p=setPos(pos-1);
         if(p!=NULL){
-            lnk<T>* tem=new lnk<T>(val);
             tem->next=p->next;
             p->next=tem;
             len++;
@@ -121,6 +144,8 @@ bool lnklist<T>::insert(int pos,T val){
     catch(...){
         return false;
     }
+
+    
 }
 
 template<class T>
@@ -158,4 +183,17 @@ int lnklist<T>::getPos(T val){
         i++;
     }    
     return -1;
+}
+
+template<class T>
+void lnklist<T>::show(){
+    lnk<T>* p=head->next;
+    int i=0;
+    while(p!=NULL){
+        if(i%5==0) cout<<endl;
+        cout<<p->data<<"  ";
+        i++;
+        p=p->next;
+    }
+    cout<<endl;
 }
