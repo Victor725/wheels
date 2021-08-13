@@ -28,6 +28,9 @@ public:
     lnk<T>* headis(){
         return head;
     }
+    lnk<T>* tailis(){
+        return tail;
+    }
     bool isEmpty();
     void clear();
     int length();
