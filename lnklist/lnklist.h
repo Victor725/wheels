@@ -25,6 +25,9 @@ private:
 public:
     lnklist(int s);
     ~lnklist();
+    lnk<T>* headis(){
+        return head;
+    }
     bool isEmpty();
     void clear();
     int length();
